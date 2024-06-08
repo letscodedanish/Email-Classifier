@@ -1,5 +1,18 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## What it does
+
+-User Authentication: Allow users to log in using Google OAuth.
+
+-Fetch Emails: Fetch the user's emails from Gmail using the Gmail API.
+
+-Classify Emails: Use OpenAI GPT to classify emails into important, Promotional, social, marketing, and spam categories.
+
+Note: For classifying the emails we are using OpenAI api but the twist is its not working for classification, some function of it are not being supported So I directly made the axios request to 3.5gpt-turbp endpoint.
+While deploying this app it is facing some build issues, I'll be fixing it in some time, I tends to use CloudFlare Workers(hono.js) for it.
+If some want to fix some issues while Classifying the emails feel free to Contrinute.
+
+
 ## Getting Started
 
 First, run the development server:
