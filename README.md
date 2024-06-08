@@ -1,5 +1,31 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## What it does
+a web application that allows users to log in using Google OAuth, fetch their last X emails from Gmail, and classify them into different categories using OpenAI GPT-4o.
+-User Authentication: Allow users to log in using Google OAuth.
+
+-Fetch Emails: Fetch the user's emails from Gmail using the Gmail API.
+
+-Classify Emails: Use OpenAI GPT to classify emails into important, Promotional, social, marketing, and spam categories.
+
+Note: For classifying the emails we are using OpenAI api but the twist is its not working for classification, some function of it are not being supported So I directly made the axios request to 3.5gpt-turbp endpoint.
+While deploying this app it is facing some build issues, I'll be fixing it in some time, I tends to use CloudFlare Workers(hono.js) for it.
+If some want to fix some issues while Classifying the emails feel free to Contrinute.
+
+## Tech Stack
+Frontend: Used Next.js with TypeScript and Tailwind, or any CSS framework of your choice
+Backend: Framework’s API routes or separate backend using Express.js, Koa, or Feather.js. and Langchain.js
+Authentication: Use Google OAuth for user authentication.
+API Integration: Integrate with the Gmail API to fetch emails and OpenAI GPT for email classification.
+
+
+## What I aim to use in future(Tech Integration)
+- Turborepo
+- Cloudflare Workers(hono.js)
+- Rate Limiting
+- Docker
+- Postgess as database(with connection pooling)
+
 ## Getting Started
 
 First, run the development server:
