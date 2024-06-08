@@ -1,7 +1,7 @@
 import { Email } from '../types'; // Ensure the correct path
 
 export const parseEmails = (emailData: any[]): Email[] => {
-  return emailData.map(email => {
+  return emailData.slice(0, 15).map(email => {
     const headers = email.payload.headers;
     const subject = headers.find((header: any) => header.name === 'Subject')?.value || 'No Subject';
     const from = headers.find((header: any) => header.name === 'From')?.value || 'Unknown Sender';
@@ -10,9 +10,9 @@ export const parseEmails = (emailData: any[]): Email[] => {
     let body = '';
     if (email.payload.parts) {
       const part = email.payload.parts.find((p: any) => p.mimeType === 'text/plain');
-      body = part ? atob(part.body.data.replace(/-/g, '+').replace(/_/g, '/')) : 'No Content';
+      body = part ? Buffer.from(part.body.data, 'base64').toString() : 'No Content';
     } else {
-      body = email.payload.body.data ? atob(email.payload.body.data.replace(/-/g, '+').replace(/_/g, '/')) : 'No Content';
+      body = email.payload.body.data ? Buffer.from(email.payload.body.data, 'base64').toString() : 'No Content';
     }
 
     // Truncate the body to the first 500 characters

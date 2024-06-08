@@ -7,5 +7,6 @@ export interface Email {
     classification?: string; // Make classification optional
     body?: string; // Add body property,
     date: string;
+    labelIds?: string[] | undefined; // Add labelIds property
 }
   
