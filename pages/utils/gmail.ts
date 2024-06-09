@@ -17,8 +17,7 @@ export const parseEmails = (emailData: any[]): Email[] => {
 
     // Truncate the body to the first 500 characters
     const truncatedBody = body.length > 500 ? `${body.substring(0, 500)}...` : body;
-
-    return {
+    const output = {
       id: email.id,
       snippet: email.snippet,
       subject,
@@ -26,6 +25,10 @@ export const parseEmails = (emailData: any[]): Email[] => {
       classification: 'General', // Default classification, will be updated later
       body: truncatedBody,
       date
+    };
+    localStorage.setItem(email.id, JSON.stringify(output));
+    return {
+      ...output,
     };
   });
 };

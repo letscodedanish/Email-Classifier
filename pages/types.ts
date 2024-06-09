@@ -9,4 +9,8 @@ export interface Email {
     date: string;
     labelIds?: string[] | undefined; // Add labelIds property
 }
+
+export interface ClassifiedEmail extends Email {
+    classification: string;
+}
   

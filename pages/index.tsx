@@ -5,7 +5,7 @@ import AuthButton from '../pages/components/AuthButton';
 import EmailList from '../pages/components/EmailList';
 import EmailDetail from '../pages/components/EmailDetail';
 import { parseEmails } from '../pages/utils/gmail';
-import { classifyEmails } from '../pages/utils/openai'; // Import classifyEmails function
+import {classifyEmail} from '../pages/utils/openai'; // Import classifyEmail function
 import { Email } from './types'; // Import the unified Email type
 import { useEffect, useState } from 'react';
 
@@ -14,6 +14,7 @@ export default function Home() {
   const [emails, setEmails] = useState<Email[]>([]);
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
   const [error, setError] = useState<string | undefined>(undefined);
+  const [emailContent, setEmailContent] = useState<Email | null>(null);
 
   useEffect(() => {
     if (session) {
@@ -23,6 +24,7 @@ export default function Home() {
           const response = await axios.get('/api/fetchEmails');
           console.log('Fetched emails:', response.data);
           const parsedEmails = parseEmails(response.data);
+    
           setEmails(parsedEmails); // Set the parsed emails without classification
         } catch (err) {
           console.error('Failed to fetch emails:', err);
@@ -33,18 +35,21 @@ export default function Home() {
     }
   }, [session]);
 
-  const handleClassify = async () => {
-    try {
-      const classifiedEmails = await classifyEmails(emails);
-      setEmails(classifiedEmails);
-    } catch (err) {
-      console.error('Failed to classify emails:', err);
-      setError('Failed to classify emails. Please try again later.');
-    }
-  };
+  const handleEmailClick = async (email: Email) => {
+    let htmlContent: any = [];
+    // htmlContent = findHtmlPart(email?.payload?.parts);
 
-  const handleEmailClick = (email: Email) => {
+    console.log(htmlContent);
+    setEmailContent(email);
     setSelectedEmail(email);
+
+    try {
+      const classifiedEmail = await classifyEmail(email);
+      setSelectedEmail(classifiedEmail); // Update the selected email with its classification
+    } catch (err) {
+      console.error('Failed to classify email:', err);
+      setError('Failed to classify email. Please try again later.');
+    }
   };
 
   const handleBack = () => {
@@ -57,7 +62,7 @@ export default function Home() {
         {session && session.user && (
           <div className="flex items-center">
             <img
-            //@ts-ignore
+              //@ts-ignore
               src={session.user.image}
               alt="Profile"
               className="w-10 h-10 rounded-full mr-2"
@@ -70,14 +75,6 @@ export default function Home() {
         )}
         <div>
           <AuthButton />
-          {session && (
-            <button
-            onClick={handleClassify}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Classify Emails
-          </button>
-          )}
         </div>
       </div>
       <h1 className="text-2xl font-bold mb-4">Email Classifier</h1>
@@ -85,7 +82,6 @@ export default function Home() {
       {session && !selectedEmail && (
         <>
           <EmailList emails={emails} onEmailClick={handleEmailClick} />
-          
         </>
       )}
       {session && selectedEmail && (

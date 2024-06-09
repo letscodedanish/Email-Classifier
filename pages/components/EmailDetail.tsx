@@ -22,7 +22,7 @@ const EmailDetail: React.FC<EmailDetailProps> = ({ email, onBack }) => {
         <span>From: <span className="text-black">{email.from}</span></span><br />
         <span>Date: <span className="text-black">{email.date}</span></span>
       </div>
-      <p className="text-sm text-gray-500 mb-2">Category: {email.classification}</p>
+      <p className="text-sm text-black mb-2">Category: {email.classification}</p>
       <hr className="my-4" />
       <div className="mt-4 text-black whitespace-pre-wrap overflow-auto max-h-[60vh]">
         {email.body}
