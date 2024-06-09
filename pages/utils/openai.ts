@@ -6,7 +6,6 @@ import { Configuration, OpenAIApi } from 'openai';
 import { Email, ClassifiedEmail } from '../types';
 
 dotenv.config();
-
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
