@@ -4,16 +4,11 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import { Configuration, OpenAIApi } from 'openai';
 import { Email, ClassifiedEmail } from '../types';
-const OPENAI_API_KEY=`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`
 
-// dotenv.config();
-
-// const configuration = new Configuration({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
+dotenv.config();
 
 const configuration = new Configuration({
-  apiKey: OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
